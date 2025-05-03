@@ -15,6 +15,7 @@ public class Main
                 int q = fr.nextInt();
 
                 short[] pi = new short[n];
+                int[] answer = new int[q];
 
                 for (int i = 0; i < n; i++)
                 {
@@ -27,59 +28,58 @@ public class Main
 
                 }
 
-                List<Route> routes = new ArrayList<>(n);
+                List<Plane> flights = new ArrayList<>(n);
+                flights.add(new Plane((short) 0));
                 for (int i = 0; i < n; i++)
                 {
-                    routes.add(new Route(i));
+                    flights.add(new Plane(pi[i]));
                 }
-
-                List<Plane> flights = new ArrayList<>(routes.size());
-                for (Route route : routes)
-                {
-                    flights.add(new Plane(route.getRouteNr(), route, pi[route.getRouteNr()]));
-                    System.out.println(flights
-                            .get(route.getRouteNr())
-                            .getRoutes()
-                            .stream()
-                            .map(Route::getRouteNr)
-                            .toList());
-                }
-
-
-                int[] answer = new int[q];
-
-
 
                 for (int k = 0; k < q; k++)
                 {
 
-                    switch (fr.next())
-                    {
+                    String command = fr.next();
 
-                        case "P":
+                    if(command.startsWith("P"))
+
                         {
                             int i = fr.nextInt();
-                            short p = fr.nextShort();
-                            long t = fr.nextLong();
-                            flights.get(i).changeFlight(t, p);
+                            if (i >= 0 && i < flights.size())
+                            {
+                                short p = fr.nextShort();
+                                long t = fr.nextLong();
+                                flights.get(i).changeFlight(t, p);
+                                answer[k] = -1;
+                            }
+
                         }
 
-                        case "C":
+                    else if(command.startsWith("C"))
                         {
                             int i = fr.nextInt();
-                            long t = fr.nextLong();
-                            flights.get(i).changeFlight(t,0);
+                            if (i >= 0 && i < flights.size())
+                            {
+                                long t = fr.nextLong();
+                                flights.get(i).setInactiveFromDay(t);
+                                answer[k] = -1;
+                            }
+
                         }
 
-                        case "A":
+                    else if(command.startsWith("A"))
                         {
                             int i = fr.nextInt();
-                            short p = fr.nextShort();
-                            long t = fr.nextLong();
-                            flights.get(i).ro;
+                            if (i >= 0 && i < flights.size())
+                            {
+                                short p = fr.nextShort();
+                                long t = fr.nextLong();
+                                flights.get(i).changeFlight(t + 1, p);
+                                answer[k] = -1;
+                            }
+
                         }
 
-                        case "Q":
+                    else if(command.startsWith("Q"))
                         {
                             int i = fr.nextInt();
                             int j = fr.nextInt();
@@ -89,15 +89,18 @@ public class Main
                             {
                                 for (int m = i; m <= j; m++)
                                 {
-                                    answer[k] += flights[m];
+                                    answer[k] += flights.get(m).getSeatsByDay(l);
                                 }
                             }
+
                         }
-                    }
+
+
 
                 }
                 for(int i = 0; i < q ; i++)
                 {
+                    
                     System.out.println(answer[i]);
                 }
             }
@@ -112,6 +115,7 @@ public class Main
 
 
     }
+
 
 
 

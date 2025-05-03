@@ -22,16 +22,20 @@ public class FastReader
         {
             try
             {
-                st = new StringTokenizer(br.readLine());
-                return st.nextToken();
+                String line = br.readLine();
+                if (line == null) {
+                    throw new IOException("Brak danych wejściowych");
+                }
+                st = new StringTokenizer(line);
             }
-            catch(Exception e)
+            catch(IOException e)
             {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
         }
         return st.nextToken();
     }
+
 
     int nextInt()
     {

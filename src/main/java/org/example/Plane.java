@@ -1,82 +1,112 @@
 package org.example;
 
-import javax.annotation.processing.Generated;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
 
 public class Plane
 {
-    private int id;
-    private List<Route> routes;
-    private TreeMap<Long, Integer> flights;
-    private boolean isActive = true;
+    private TreeMap<Long, Flight> flights;
+    private short seats;
+    private long inactiveFromDay = Long.MAX_VALUE;
+    private long inactiveToDay = 0L;
+    private boolean changed = false;
+    private long changedSeatsDay;
 
-    public Plane(int id, Route route, int seats)
+    public Plane(short seats)
     {
-        this.id = id;
-        this.routes = new ArrayList<>();
-        this.flights = new TreeMap<>(Map.of(
-                0L, seats,
-                1L, seats,
-                2L, seats
-        ));
-        route.assignPlane(this);
-        routes.add(route);
+        this.seats = seats;
+        this.flights = new TreeMap<>(Map.of(0L, new Flight(seats, true)));
+
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public boolean isActive()
+    public void changeSeatsFromDay(long day, short newSeats)
     {
-        return isActive;
+        if(isActiveOnDay(day))
+        {
+            flights.put(day + 1, new Flight(newSeats, true));
+            setChangedSeatsDay(day + 1);
+            setChanged(true);
+        }
     }
 
-    public void setActive(boolean isActive)
+
+    public void changeFlight(long day, short passengers)
     {
-        this.isActive = isActive;
+        if(!isActiveOnDay(day) && day >= inactiveFromDay)
+        {
+            inactiveToDay = day - 1L;
+        }
+
+        if(flights.containsKey(day))
+        {
+            flights.get(day).setPassengers(passengers);
+        }
+        else
+        {
+            flights.put(day, new Flight(passengers, true));
+        }
+
     }
 
-    public void addFlight(long day, int passengers)
+
+    public short getSeatsByDay(long day)
     {
-        flights.put(day, passengers);
+        if (day >= inactiveFromDay)
+        {
+            return 0;
+        }
+
+        Map.Entry<Long, Flight> entry = flights.floorEntry(day);
+
+        if (entry == null)
+        {
+            return seats;
+        }
+
+        if (!entry.getValue().isActive())
+        {
+            return 0;
+        }
+
+        return entry.getValue().getPassengers();
     }
 
-    public void changeFlight(long day, int passengers)
+
+
+    public void setInactiveFromDay(long day)
     {
-        flights.replace(day, passengers);
+        this.inactiveFromDay = day;
+        flights.tailMap(day, true).clear();
+        setInactiveToDay(Long.MAX_VALUE);
+
+    }
+    public void setInactiveToDay(long day)
+    {
+        this.inactiveToDay = day;
+        flights.get(day).setActive(false);
+
     }
 
-    public int getSeatsByDay(long day)
+    public boolean isActiveOnDay(long day)
     {
-        return flights.getOrDefault(day, flights.get(day));
+        return flights.get(day) == null || flights.get(day).isActive();
     }
 
-    public List<Route> getRoutes()
-    {
-        return routes;
-    }
-    public void addRoute(Route route)
-    {
-        routes.add(route);
-    }
-    public void removeRoute(Route route)
-    {
-        routes.remove(route);
+    public boolean isChanged() {
+        return changed;
     }
 
-//    @Override
-//    public String toString()
-//    {
-//        return String.format("Plane %d", id);
-//    }
+    public void setChanged(boolean changed) {
+        this.changed = changed;
+    }
 
+    public long getChangedSeatsDay() {
+        return changedSeatsDay;
+    }
+
+    public void setChangedSeatsDay(long changedSeatsDay) {
+        this.changedSeatsDay = changedSeatsDay;
+    }
 }
