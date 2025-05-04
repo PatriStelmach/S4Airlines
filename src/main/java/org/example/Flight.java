@@ -2,15 +2,24 @@ package org.example;
 
 public class Flight
 {
+    private long day;
     private short passengers;
-    private boolean active;
+    private int route;
 
-    public Flight(short passengers, boolean active) {
+    public Flight(long day, short passengers, int route)
+    {
+        this.day = day;
         this.passengers = passengers;
-        this.active = active;
+        this.route = route;
     }
 
+    public long getDay() {
+        return day;
+    }
 
+    public void setDay(long day) {
+        this.day = day;
+    }
 
     public short getPassengers() {
         return passengers;
@@ -20,12 +29,12 @@ public class Flight
         this.passengers = passengers;
     }
 
-    public boolean isActive() {
-        return active;
+    public int getRoute() {
+        return route;
+    }
+    public void setRoute(int route) {
+        this.route = route;
     }
 
-    public void setActive(boolean active) {
-        this.active = active;
-    }
 
 }

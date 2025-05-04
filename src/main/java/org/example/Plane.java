@@ -1,112 +1,114 @@
 package org.example;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
 
 public class Plane
 {
-    private TreeMap<Long, Flight> flights;
-    private short seats;
+
+    private Map<Long, Flight> flightsByDay = new HashMap<>();
+    private List<Flight> flights = new ArrayList<>();
+    private List<Period> periods = new ArrayList<>();
+    private short passengers;
     private long inactiveFromDay = Long.MAX_VALUE;
-    private long inactiveToDay = 0L;
-    private boolean changed = false;
-    private long changedSeatsDay;
+    private long inactiveToDay = -1L;
+    private boolean changedPassengers = false;
+    private long changedPassengersDay = -1L;
+//    private short changedSeats;
+    private boolean changedRoute = false;
+    private long changedRouteDay = -1L;
+//    private short changedRouteSeats;
+    private int routeCount = 0;
 
-    public Plane(short seats)
+    public Plane(short passengers)
     {
-        this.seats = seats;
-        this.flights = new TreeMap<>(Map.of(0L, new Flight(seats, true)));
+        this.passengers = passengers;
+        Flight initialFlight = new Flight(0L, passengers, routeCount);
+        this.flights.add(initialFlight);
+        this.flightsByDay.put(0L, initialFlight);
+        periods.add(new Period(0L, Long.MAX_VALUE, passengers));
 
     }
 
-
-    public void changeSeatsFromDay(long day, short newSeats)
+    private Flight findFlightByDay(long day)
     {
-        if(isActiveOnDay(day))
-        {
-            flights.put(day + 1, new Flight(newSeats, true));
-            setChangedSeatsDay(day + 1);
-            setChanged(true);
-        }
+        return flightsByDay.get(day);
+    }
+
+    public void changeRoute(long day, short seats)
+    {
+        setInactiveFromDay(day);
+        periods.add(new Period(day, Long.MAX_VALUE, seats));
+    }
+
+    public void changePassengers(long day, short seats)
+    {
+        setInactiveFromDay(day);
+        periods.add(new Period(day, Long.MAX_VALUE, seats));
     }
 
 
-    public void changeFlight(long day, short passengers)
+    public int getSeatsByDay(long day, long maxDay)
     {
-        if(!isActiveOnDay(day) && day >= inactiveFromDay)
+        for (Period p : periods)
         {
-            inactiveToDay = day - 1L;
+            if (p.fromInclusive <= day && day < p.toExclusive && maxDay <= p.toExclusive) {
+                return p.seats;
+            }
         }
-
-        if(flights.containsKey(day))
-        {
-            flights.get(day).setPassengers(passengers);
-        }
-        else
-        {
-            flights.put(day, new Flight(passengers, true));
-        }
-
-    }
-
-
-    public short getSeatsByDay(long day)
-    {
-        if (day >= inactiveFromDay)
-        {
-            return 0;
-        }
-
-        Map.Entry<Long, Flight> entry = flights.floorEntry(day);
-
-        if (entry == null)
-        {
-            return seats;
-        }
-
-        if (!entry.getValue().isActive())
-        {
-            return 0;
-        }
-
-        return entry.getValue().getPassengers();
+        return 0;
     }
 
 
 
     public void setInactiveFromDay(long day)
     {
-        this.inactiveFromDay = day;
-        flights.tailMap(day, true).clear();
-        setInactiveToDay(Long.MAX_VALUE);
+        if(periods.isEmpty()) return;
+        Period last = periods.getLast();
+        if (last.toExclusive > day) {
+            last.toExclusive = day;
+        }
+
 
     }
     public void setInactiveToDay(long day)
     {
         this.inactiveToDay = day;
-        flights.get(day).setActive(false);
-
     }
 
     public boolean isActiveOnDay(long day)
     {
-        return flights.get(day) == null || flights.get(day).isActive();
+        return day > inactiveToDay || day < inactiveFromDay;
     }
 
-    public boolean isChanged() {
-        return changed;
+//    public boolean isChangedSeatsCount() {
+//        return changedSeatsCount;
+//    }
+//
+    public void setChangedPassengers(boolean changedPassengers) {
+        this.changedPassengers = changedPassengers;
     }
-
-    public void setChanged(boolean changed) {
-        this.changed = changed;
+//
+//
+    public void setChangedPassengersDay(long changedPassengersDay)
+    {
+        this.changedPassengersDay = changedPassengersDay;
     }
-
-    public long getChangedSeatsDay() {
-        return changedSeatsDay;
+//
+//
+//    public void setChangedSeats(short changedSeats) {
+//        this.changedSeats = changedSeats;
+//    }
+//
+    public void setChangedRoute(boolean changedRoute) {
+        this.changedRoute = changedRoute;
     }
-
-    public void setChangedSeatsDay(long changedSeatsDay) {
-        this.changedSeatsDay = changedSeatsDay;
+//
+    public void setChangedRouteDay(long changedRouteDay) {
+        this.changedRouteDay = changedRouteDay;
     }
+//
+//    public void setChangedRouteSeats(short changedRouteSeats) {
+//        this.changedRouteSeats = changedRouteSeats;
+//    }
 }

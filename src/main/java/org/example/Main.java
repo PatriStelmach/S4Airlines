@@ -44,11 +44,10 @@ public class Main
 
                         {
                             int i = fr.nextInt();
-                            if (i >= 0 && i < flights.size())
                             {
                                 short p = fr.nextShort();
                                 long t = fr.nextLong();
-                                flights.get(i).changeFlight(t, p);
+                                flights.get(i).changePassengers(t, p);
                                 answer[k] = -1;
                             }
 
@@ -57,7 +56,6 @@ public class Main
                     else if(command.startsWith("C"))
                         {
                             int i = fr.nextInt();
-                            if (i >= 0 && i < flights.size())
                             {
                                 long t = fr.nextLong();
                                 flights.get(i).setInactiveFromDay(t);
@@ -69,39 +67,43 @@ public class Main
                     else if(command.startsWith("A"))
                         {
                             int i = fr.nextInt();
-                            if (i >= 0 && i < flights.size())
                             {
                                 short p = fr.nextShort();
                                 long t = fr.nextLong();
-                                flights.get(i).changeFlight(t + 1, p);
+                                flights.get(i).changeRoute(t, p);
                                 answer[k] = -1;
                             }
 
                         }
 
                     else if(command.startsWith("Q"))
-                        {
-                            int i = fr.nextInt();
-                            int j = fr.nextInt();
-                            long t = fr.nextLong();
+                    {
+                        int i = fr.nextInt();
+                        int j = fr.nextInt();
+                        long t = fr.nextLong();
 
-                            for (int l = 1; l <= t; l++)
+
+                        for (int l = 0; l < t; l++)
+                        {
+                            for (int m = i; m <= j; m++)
                             {
-                                for (int m = i; m <= j; m++)
+
+                                if (m >= 0 && m < flights.size())
                                 {
-                                    answer[k] += flights.get(m).getSeatsByDay(l);
+                                    answer[k] += flights.get(m).getSeatsByDay(l, t);
                                 }
                             }
-
                         }
 
-
+                    }
 
                 }
                 for(int i = 0; i < q ; i++)
                 {
-                    
-                    System.out.println(answer[i]);
+                    if(answer[i] != -1)
+                    {
+                        System.out.println(answer[i]);
+                    }
                 }
             }
         catch (OutOfMemoryError e)
