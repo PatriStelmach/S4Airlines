@@ -18,7 +18,7 @@ public class Flight
         this.toExclusive = to;
         this.seats = seats;
     }
-
+    //P
     public void addNewPeriod(long from, long to, short newPeriodSeats)
     {
         Periods newSeat = (new Periods(from, to, newPeriodSeats));
