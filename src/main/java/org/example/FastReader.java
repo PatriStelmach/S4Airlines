@@ -3,7 +3,7 @@ package org.example;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.StreamTokenizer;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
 public class FastReader
@@ -36,7 +36,6 @@ public class FastReader
         return st.nextToken();
     }
 
-
     int nextInt()
     {
         return Integer.parseInt(next());
@@ -49,19 +48,4 @@ public class FastReader
     {
         return Short.parseShort(next());
     }
-
-    String nextLine()
-    {
-        String str ="";
-        try
-        {
-            str = br.readLine();
-        }
-        catch (IOException e)
-        {
-            throw new RuntimeException(e);
-        }
-        return str;
-    }
-
 }

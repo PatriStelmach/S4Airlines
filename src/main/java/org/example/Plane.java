@@ -5,48 +5,42 @@ import java.util.*;
 
 public class Plane
 {
-
-    private List<Period> periods = new ArrayList<>();
+    private final List<Flight> flights = new ArrayList<>();
 
     public Plane(short passengers)
     {
-        periods.add(new Period(0L, Long.MAX_VALUE, passengers));
-
+        flights.add(new Flight(0L, Long.MAX_VALUE, passengers));
     }
 
     public void changeRoute(long day, short seats)
     {
-        periods.getLast().setToExclusive(day);
-        periods.add(new Period(day, Long.MAX_VALUE, seats));
+        flights.getLast().setToExclusive(day);
+        flights.add(new Flight(day, Long.MAX_VALUE, seats));
     }
-
     public void changePassengers(long day, short seats)
     {
-        periods.getLast().setNewSeatsDay(day);
-        periods.getLast().setNewSeatsValue(seats);
-        periods.getLast().setNewSeats(true);
+        flights.getLast().addNewPeriod(day, Long.MAX_VALUE, seats);
     }
 
-
-    public int getSeatsByDay(long day, long maxDay)
+    public short getSeatsByDay(long day, long maxDay)
     {
-        for (int i = 0; i < 2; i++)
+        for (Flight f : flights)
         {
-//            System.out.println(periods.get(i).getInactiveFrom());
-
-            if(maxDay > periods.get(i).getInactiveFrom())
+            //C
+            if(maxDay > f.getInactiveFrom())
             {
                 continue;
             }
-            if (periods.get(i).getFromInclusive() <= day && day < periods.get(i).getToExclusive() && maxDay <= periods.get(i).getToExclusive())
+            //P
+            if  (f.isPeriodChanged())
             {
-                return periods.get(i).getSeats();
+                    return f.getPeriodSeats(day);
             }
-            if(periods.get(i).isNewSeats() && periods.get(i).getNewSeatsDay() <= day)
+            //A or no changes
+            if (f.getFromInclusive() <= day && day < f.getToExclusive() && maxDay <= f.getToExclusive())
             {
-                return periods.get(i).getNewSeatsValue();
+                return f.getSeats();
             }
-
 
         }
       return 0;
@@ -54,15 +48,13 @@ public class Plane
 
     public void setInactiveFromDay(long day)
     {
-        if(periods.isEmpty()) return;
-        Period last = periods.getLast();
+        if(flights.isEmpty()) return;
+        Flight last = flights.getLast();
         if (last.getToExclusive() > day)
         {
             last.setToExclusive(day);
             last.setInactiveFrom(day);
         }
-
     }
-
 
 }

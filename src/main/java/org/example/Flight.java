@@ -1,40 +1,82 @@
 package org.example;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Flight
 {
-    private long day;
-    private short passengers;
-    private int route;
+    private long getFromInclusive, toExclusive;
+    private short seats;
+    private boolean areSeatsChanged = false;
+    private long inactiveFrom = Long.MAX_VALUE;
+    private final List<Periods> periods = new ArrayList<>();
 
-    public Flight(long day, short passengers, int route)
+    Flight(long from, long to, short seats)
     {
-        this.day = day;
-        this.passengers = passengers;
-        this.route = route;
+        this.getFromInclusive = from;
+        this.toExclusive = to;
+        this.seats = seats;
     }
 
-    public long getDay() {
-        return day;
+    public void addNewPeriod(long from, long to, short newPeriodSeats)
+    {
+        Periods newSeat = (new Periods(from, to, newPeriodSeats));
+
+        if(areSeatsChanged)
+        {
+            periods.stream()
+                    .filter(ns -> ns.getGetFromInclusive() <= newSeat.getGetFromInclusive()
+                    && ns.getToExclusive() >= newSeat.getToExclusive()
+                    )
+                    .findFirst()
+                    .ifPresent(ns -> ns.setToExclusive(from));
+        }
+        periods.add(newSeat);
+        setPeriodChanged(true);
     }
 
-    public void setDay(long day) {
-        this.day = day;
+    public short getPeriodSeats(long day)
+    {
+        return periods.stream()
+                .filter(ns -> ns.getGetFromInclusive() <= day && day < ns.getToExclusive())
+                .findFirst()
+                .map(Periods::getNewSeatsValue)
+                .orElse(seats);
+    }
+    public long getFromInclusive() {
+        return getFromInclusive;
     }
 
-    public short getPassengers() {
-        return passengers;
+    public long getToExclusive() {
+        return toExclusive;
     }
 
-    public void setPassengers(short passengers) {
-        this.passengers = passengers;
+    public void setToExclusive(long toExclusive) {
+        this.toExclusive = toExclusive;
     }
 
-    public int getRoute() {
-        return route;
+    public short getSeats() {
+        return seats;
     }
-    public void setRoute(int route) {
-        this.route = route;
+
+    public void setSeats(short seats) {
+        this.seats = seats;
+    }
+
+    public long getInactiveFrom() {
+        return inactiveFrom;
+    }
+
+    public void setInactiveFrom(long inactiveFrom) {
+        this.inactiveFrom = inactiveFrom;
     }
 
 
+    public boolean isPeriodChanged() {
+        return areSeatsChanged;
+    }
+
+    public void setPeriodChanged(boolean areSeatsChanged) {
+        this.areSeatsChanged = areSeatsChanged;
+    }
 }
