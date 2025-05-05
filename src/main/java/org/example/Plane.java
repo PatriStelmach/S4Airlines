@@ -7,11 +7,9 @@ public class Plane
 {
 
     private List<Period> periods = new ArrayList<>();
-    private short passengers;
 
     public Plane(short passengers)
     {
-        this.passengers = passengers;
         periods.add(new Period(0L, Long.MAX_VALUE, passengers));
 
     }
@@ -24,21 +22,34 @@ public class Plane
 
     public void changePassengers(long day, short seats)
     {
-        periods.getLast().setToExclusive(day);
-        periods.add(new Period(day, Long.MAX_VALUE, seats));
+        periods.getLast().setNewSeatsDay(day);
+        periods.getLast().setNewSeatsValue(seats);
+        periods.getLast().setNewSeats(true);
     }
 
 
     public int getSeatsByDay(long day, long maxDay)
     {
-        for (Period p : periods)
+        for (int i = 0; i < 2; i++)
         {
-            if (p.getFromInclusive() <= day && day < p.getToExclusive() && maxDay <= p.getToExclusive())
+//            System.out.println(periods.get(i).getInactiveFrom());
+
+            if(maxDay > periods.get(i).getInactiveFrom())
             {
-                return p.getSeats();
+                continue;
             }
+            if (periods.get(i).getFromInclusive() <= day && day < periods.get(i).getToExclusive() && maxDay <= periods.get(i).getToExclusive())
+            {
+                return periods.get(i).getSeats();
+            }
+            if(periods.get(i).isNewSeats() && periods.get(i).getNewSeatsDay() <= day)
+            {
+                return periods.get(i).getNewSeatsValue();
+            }
+
+
         }
-        return 0;
+      return 0;
     }
 
     public void setInactiveFromDay(long day)
