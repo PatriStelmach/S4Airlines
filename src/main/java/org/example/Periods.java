@@ -3,7 +3,7 @@ package org.example;
 public class Periods
 {
 
-    private short newSeatsValue = 0;
+    private final short newSeatsValue;
     private final long getFromInclusive;
     private long toExclusive;
 

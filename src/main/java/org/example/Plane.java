@@ -9,17 +9,17 @@ public class Plane
 
     public Plane(short passengers)
     {
-        flights.add(new Flight(0L, Long.MAX_VALUE, passengers));
+        flights.add(new Flight(0L, 100000000000L, passengers));
     }
 
     public void changeRoute(long day, short seats)
     {
         flights.getLast().setToExclusive(day);
-        flights.add(new Flight(day, Long.MAX_VALUE, seats));
+        flights.add(new Flight(day, 100000000000L, seats));
     }
     public void changePassengers(long day, short seats)
     {
-        flights.getLast().addNewPeriod(day, Long.MAX_VALUE, seats);
+        flights.getLast().addNewPeriod(day, 100000000000L, seats);
     }
 
     public short getSeatsByDay(long day, long maxDay)
@@ -32,7 +32,7 @@ public class Plane
                 continue;
             }
             //P
-            if  (f.isPeriodChanged())
+            if  (f.isPeriodChanged() && f.getFromInclusive() <= day && day < f.getToExclusive())
             {
                     return f.getPeriodSeats(day);
             }

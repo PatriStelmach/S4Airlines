@@ -5,10 +5,11 @@ import java.util.List;
 
 public class Flight
 {
-    private long getFromInclusive, toExclusive;
-    private short seats;
+    private final long getFromInclusive;
+    private long toExclusive;
+    private final short seats;
     private boolean areSeatsChanged = false;
-    private long inactiveFrom = Long.MAX_VALUE;
+    private long inactiveFrom = 100000000000L;
     private final List<Periods> periods = new ArrayList<>();
 
     Flight(long from, long to, short seats)
@@ -57,10 +58,6 @@ public class Flight
 
     public short getSeats() {
         return seats;
-    }
-
-    public void setSeats(short seats) {
-        this.seats = seats;
     }
 
     public long getInactiveFrom() {
