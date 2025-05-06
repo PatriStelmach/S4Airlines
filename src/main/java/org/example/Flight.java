@@ -59,6 +59,9 @@ public class Flight
     public short getSeats() {
         return seats;
     }
+    public List<Periods> getPeriods() {
+        return periods;
+    }
 
     public long getInactiveFrom() {
         return inactiveFrom;
