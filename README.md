@@ -18,6 +18,7 @@ All logic is implemented with vanilla Java—no frameworks—and high‐performa
 ## Repository Structure
 
 S4Airlines/
+
 ├── pom.xml # Maven config (Java 21)
 
 └── src/
