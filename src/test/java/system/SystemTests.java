@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import java.io.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class SystemTests
 {
@@ -90,5 +91,27 @@ public class SystemTests
         assertEquals("12", outputLines[2]);
         assertEquals("30", outputLines[3]);
         assertEquals("36", outputLines[4]);
+    }
+
+    @Test
+    void testNotChronologicalAppCall()
+    {
+        // GIven
+        String input =
+                """
+                5 7
+                1 2 3 2 4
+                Q 1 5 2
+                Q 2 3 2
+                C 2 1
+                """;
+
+        System.setIn(new ByteArrayInputStream(input.getBytes()));
+
+        // When, THen
+        IllegalArgumentException ex = assertThrows(IllegalArgumentException.class,
+                App::appCall);
+
+
     }
 }

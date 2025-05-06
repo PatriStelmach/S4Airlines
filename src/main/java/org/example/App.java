@@ -10,8 +10,11 @@ import java.util.List;
 
 public class App
 {
+    private static long days = 1;
     public static void appCall()
     {
+        instruction();
+
         FastReader fr = new FastReader();
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
 
@@ -69,7 +72,6 @@ public class App
     {
         List<Long> answer = new ArrayList<>();
 
-
         for (int k = 0; k < q; k++)
         {
             String command = fr.next();
@@ -91,6 +93,10 @@ public class App
         int i = fr.nextInt();
         short p = fr.nextShort();
         long t = fr.nextLong();
+        if(t < days)
+        {
+            throw new IllegalArgumentException("Queries must be in chronological order!");
+        } days = t;
         flights[i].changePassengers(t, p);
     }
     //C
@@ -98,6 +104,10 @@ public class App
     {
         int i = fr.nextInt();
         long t = fr.nextLong();
+        if(t < days)
+        {
+            throw new IllegalArgumentException("Queries must be in chronological order!");
+        } days = t;
         flights[i].setInactive(t);
     }
     //A
@@ -106,6 +116,10 @@ public class App
         int i = fr.nextInt();
         short p = fr.nextShort();
         long t = fr.nextLong();
+        if(t < days)
+        {
+            throw new IllegalArgumentException("Queries must be in chronological order!");
+        } days = t;
         flights[i].newRoute(t, p);
     }
 
@@ -115,6 +129,10 @@ public class App
         int i = fr.nextInt();
         int j = fr.nextInt();
         long t = fr.nextLong();
+        if(t < days)
+        {
+            throw new IllegalArgumentException("Queries must be in chronological order!");
+        } days = t;
         long sum = 0;
 
             for (int m = i; m <= j; m++)
@@ -133,5 +151,33 @@ public class App
             bw.newLine();
         }
         bw.flush();
+    }
+
+    public static void instruction()
+    {
+        System.out.println(
+    """
+    ==========================================
+      Welcome to S4Airlines Console Manager
+    ==========================================
+    Manage airline routes and seat availability over time.
+
+    Available commands:
+      P i p t  - Increase passengers on plane *i* to *p* at day *t*
+      A i p t  - Add a new route with capacity *p* on plane *i* at day *t*
+      C i t    - Deactivate the active rout of plane *i* from day *t* onward
+      Q i j t  - Sum of available seats on planes *i* to *j* to day *t*
+
+    Please enter the number of planes (1 ≤ n ≤ 10^7) and number of commands (1 ≤ q ≤ 10^7),
+    followed by q lines of commands as described above.
+    The commands MUST be written in chronological order.
+    The number of seats is limited by 0 ≤ pi ≤ 1000 and the number of days is limited by 0 ≤ t ≤ 10^11
+
+    Example:
+      3 2
+      1 10 3
+      P 1 50 4
+      Q 1 3 5
+    """);
     }
 }
