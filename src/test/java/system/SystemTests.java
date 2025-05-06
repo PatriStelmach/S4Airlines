@@ -62,7 +62,7 @@ public class SystemTests
     }
 
     @Test
-    void testSecondsAppCall()
+    void testSecondAppCall()
     {
         // GIven
         String input =
