@@ -39,7 +39,7 @@ public class App
     }
 
     private static void validateInputSizes(int n, int q)
-    {
+    {   //1≤ n ≤ 10^7 , 1≤ q ≤ 10^7
         if (n < 1 || q < 1 || n > 10_000_000 || q > 10_000_000)
         {
             throw new IllegalArgumentException("The number of planes and routes has to be between 1 and 10^7");
