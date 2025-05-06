@@ -67,6 +67,7 @@ public class App
     {
         List<Long> answer = new ArrayList<>();
 
+
         for (int k = 0; k < q; k++)
         {
             String command = fr.next();
@@ -95,7 +96,7 @@ public class App
     {
         int i = fr.nextInt();
         long t = fr.nextLong();
-        flights[i].setInactiveFromDay(t);
+        flights[i].setInactive(t);
     }
 
     private static void handleChangeRoute(FastReader fr, Plane[] flights)
@@ -113,8 +114,6 @@ public class App
         int j = fr.nextInt();
         long t = fr.nextLong();
         long sum = 0;
-
-        //10^18 XDDDDDDDDDD
 
             for (int m = i; m <= j; m++)
             {

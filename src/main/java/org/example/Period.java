@@ -1,17 +1,16 @@
 package org.example;
 
-public class Periods
+public class Period
 {
 
     private final short newSeatsValue;
     private final long getFromInclusive;
-    private long toExclusive;
+    private long toExclusive = 100000000000L;
 
-    public Periods(long getFromInclusive, long toExclusive, short newSeatsValue)
+    public Period(long getFromInclusive, short newSeatsValue)
     {
         this.newSeatsValue = newSeatsValue;
         this.getFromInclusive = getFromInclusive;
-        this.toExclusive = toExclusive;
     }
 
     public short getNewSeatsValue() {
