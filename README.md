@@ -19,17 +19,29 @@ All logic is implemented with vanilla Java—no frameworks—and high‐performa
 
 S4Airlines/
 ├── pom.xml # Maven config (Java 21)
+
 └── src/
+
 ├── main/java/org/example/
+
 │ ├── App.java # Entry point; orchestrates I/O & commands
+
 │ ├── FastReader.java # High‐speed console reader
+
 │ └── Models/
+
 │ ├── Plane.java # Manages per‐plane state & operations
+
 │ └── Flight.java # Tracks passenger periods internally
+
 └── test/java/org/example/
+
 ├── FlightTests.java
+
 ├── PlaneTests.java
+
 ├── IntegrationTests.java
+
 └── SystemTests.java #System test via mocking standard input and output
 
 
