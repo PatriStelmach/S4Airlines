@@ -112,6 +112,6 @@ public class IntegrationTests
         App.handleQuery(mockFr, flights, answer);
 
         assertEquals(1, answer.size());
-        assertEquals(10 * 20L + 20 * 20L + 100 * 20L, answer.getFirst());  // 10 + 20 + 100 = 130
+        assertEquals(10 * 20L + 20 * 20L + 100 * 20L, answer.getFirst());
     }
 }

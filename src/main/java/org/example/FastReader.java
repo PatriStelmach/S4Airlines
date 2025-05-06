@@ -23,7 +23,7 @@ public class FastReader
             {
                 String line = br.readLine();
                 if (line == null) {
-                    throw new IOException("Brak danych wejściowych");
+                    throw new IOException("No input data!");
                 }
                 st = new StringTokenizer(line);
             }

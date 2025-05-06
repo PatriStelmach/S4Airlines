@@ -34,15 +34,17 @@ public class SystemTests
     {
         // GIven
         String input =
-                        "5 7\n" +
-                        "1 2 3 2 4\n" +
-                        "Q 1 5 2\n" +
-                        "Q 2 3 2\n"+
-                        "C 2 3\n"+
-                        "P 3 5 3\n"+
-                        "Q 2 4 4\n"+
-                        "A 2 5 6\n"+
-                        "Q 1 5 8\n";
+                        """
+                        5 7
+                        1 2 3 2 4
+                        Q 1 5 2
+                        Q 2 3 2
+                        C 2 3
+                        P 3 5 3
+                        Q 2 4 4
+                        A 2 5 6
+                        Q 1 5 8
+                        """;
 
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
@@ -64,15 +66,17 @@ public class SystemTests
     {
         // GIven
         String input =
-                        "1 7\n" +
-                        "2\n" +
-                        "Q 1 1 1\n" +
-                        "C 1 1\n"+
-                        "A 1 6 2\n"+
-                        "Q 1 1 3\n"+
-                        "Q 1 1 4\n"+
-                        "Q 1 1 7\n"+
-                        "Q 1 1 8\n";
+                        """
+                        1 7
+                        2
+                        Q 1 1 1
+                        C 1 1
+                        A 1 6 2
+                        Q 1 1 3
+                        Q 1 1 4
+                        Q 1 1 7
+                        Q 1 1 8
+                        """;
 
         System.setIn(new ByteArrayInputStream(input.getBytes()));
 
