@@ -1,5 +1,7 @@
 package org.example;
 
+import org.example.Models.Plane;
+
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -38,7 +40,7 @@ public class App
         }
     }
 
-    private static void validateInputSizes(int n, int q)
+    public static void validateInputSizes(int n, int q)
     {   //1≤ n ≤ 10^7 , 1≤ q ≤ 10^7
         if (n < 1 || q < 1 || n > 10_000_000 || q > 10_000_000)
         {
@@ -46,7 +48,7 @@ public class App
         }
     }
 
-    private static Plane[] readPlanes(FastReader fr, int n)
+    public static Plane[] readPlanes(FastReader fr, int n)
     {
         Plane[] flights = new Plane[n + 1];
         flights[0] = new Plane((short) 0);
@@ -63,7 +65,7 @@ public class App
         return flights;
     }
 
-    private static List<Long> processCommands(FastReader fr, Plane[] flights, int q)
+    public static List<Long> processCommands(FastReader fr, Plane[] flights, int q)
     {
         List<Long> answer = new ArrayList<>();
 
@@ -83,32 +85,32 @@ public class App
         }
         return answer;
     }
-
-    private static void handleChangePassengers(FastReader fr, Plane[] flights)
+    //P
+    public static void handleChangePassengers(FastReader fr, Plane[] flights)
     {
         int i = fr.nextInt();
         short p = fr.nextShort();
         long t = fr.nextLong();
         flights[i].changePassengers(t, p);
     }
-
-    private static void handleSetInactiveFromDay(FastReader fr, Plane[] flights)
+    //C
+    public static void handleSetInactiveFromDay(FastReader fr, Plane[] flights)
     {
         int i = fr.nextInt();
         long t = fr.nextLong();
         flights[i].setInactive(t);
     }
-
-    private static void handleChangeRoute(FastReader fr, Plane[] flights)
+    //A
+    public static void handleChangeRoute(FastReader fr, Plane[] flights)
     {
         int i = fr.nextInt();
         short p = fr.nextShort();
         long t = fr.nextLong();
-        flights[i].changeRoute(t, p);
+        flights[i].newRoute(t, p);
     }
 
-
-    private static void handleQuery(FastReader fr, Plane[] flights, List<Long> answer)
+    //Q
+    public static void handleQuery(FastReader fr, Plane[] flights, List<Long> answer)
     {
         int i = fr.nextInt();
         int j = fr.nextInt();
@@ -123,7 +125,7 @@ public class App
         answer.add(sum);
     }
 
-    private static void printAnswers(List<Long> answer, BufferedWriter bw) throws IOException
+    public static void printAnswers(List<Long> answer, BufferedWriter bw) throws IOException
     {
         for (Long Long : answer)
         {

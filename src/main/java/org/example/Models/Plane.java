@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Models;
 
 
 public class Plane
@@ -10,7 +10,7 @@ public class Plane
         flight = new Flight(0L, passengers);
     }
     //A
-    public void changeRoute(long day, short seats)
+    public void newRoute(long day, short seats)
     {
         flight = new Flight(day, seats);
     }
@@ -18,7 +18,7 @@ public class Plane
     public void changePassengers(long day, short seats)
     {
         if(flight.getToExclusive() <= day) return;
-        flight.addNewPeriod(day, seats);
+        flight.changeSeats(day, seats);
     }
 
     //Q

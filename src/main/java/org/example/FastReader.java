@@ -7,15 +7,15 @@ import java.util.StringTokenizer;
 
 public class FastReader
 {
-    BufferedReader br;
-    StringTokenizer st;
+    private final BufferedReader br;
+    private StringTokenizer st;
 
     public FastReader()
     {
         br = new BufferedReader(new InputStreamReader(System.in));
     }
 
-    String next()
+    public String next()
     {
         while(st == null || !st.hasMoreElements())
         {
@@ -35,15 +35,15 @@ public class FastReader
         return st.nextToken();
     }
 
-    int nextInt()
+    public int nextInt()
     {
         return Integer.parseInt(next());
     }
-    long nextLong()
+    public long nextLong()
     {
         return Long.parseLong(next());
     }
-    short nextShort()
+    public short nextShort()
     {
         return Short.parseShort(next());
     }

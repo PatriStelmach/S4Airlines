@@ -1,4 +1,4 @@
-package org.example;
+package org.example.Models;
 
 public class Flight
 {
@@ -7,18 +7,18 @@ public class Flight
     private short seats;
     private long allPassengers = 0;
 
-    Flight(long from,short seats)
+    public Flight(long from,short seats)
     {
         this.fromInclusive = from;
         this.seats = seats;
         this.toExclusive = 100_000_000_001L; // 0 ≤ t ≤10^11
     }
     //P
-    public void addNewPeriod(long from, short newPeriodSeats)
+    public void changeSeats(long from, short newSeats)
     {
         allPassengers = (from - fromInclusive) * seats;
         fromInclusive = from;
-        seats = newPeriodSeats;
+        seats = newSeats;
     }
 
     public long getFromInclusive()
