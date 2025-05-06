@@ -1,51 +1,33 @@
 package org.example;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Flight
 {
-    private final long getFromInclusive;
+    private long fromInclusive;
     private long toExclusive;
-    private final short seats;
+    private short seats;
     private boolean areSeatsChanged = false;
-    private long inactiveFrom = 100000000000L;
-    private final List<Periods> periods = new ArrayList<>();
+    private Period period;
+    private long allPassengers = 0;
 
-    Flight(long from, long to, short seats)
+
+    Flight(long from,short seats)
     {
-        this.getFromInclusive = from;
-        this.toExclusive = to;
+        this.fromInclusive = from;
         this.seats = seats;
+        this.toExclusive = 100000000000L;
     }
     //P
-    public void addNewPeriod(long from, long to, short newPeriodSeats)
+    public void addNewPeriod(long from, short newPeriodSeats)
     {
-        Periods newSeat = (new Periods(from, to, newPeriodSeats));
-
-        if(areSeatsChanged)
-        {
-            periods.stream()
-                    .filter(ns -> ns.getGetFromInclusive() <= newSeat.getGetFromInclusive()
-                    && ns.getToExclusive() >= newSeat.getToExclusive()
-                    )
-                    .findFirst()
-                    .ifPresent(ns -> ns.setToExclusive(from));
-        }
-        periods.add(newSeat);
+        allPassengers = (from - fromInclusive) * seats;
+        fromInclusive = from;
+        seats = newPeriodSeats;
         setPeriodChanged(true);
+
     }
 
-    public short getPeriodSeats(long day)
-    {
-        return periods.stream()
-                .filter(ns -> ns.getGetFromInclusive() <= day && day < ns.getToExclusive())
-                .findFirst()
-                .map(Periods::getNewSeatsValue)
-                .orElse(seats);
-    }
     public long getFromInclusive() {
-        return getFromInclusive;
+        return fromInclusive;
     }
 
     public long getToExclusive() {
@@ -55,20 +37,17 @@ public class Flight
     public void setToExclusive(long toExclusive) {
         this.toExclusive = toExclusive;
     }
+    public void setFromInclusive(long toExclusive) {
+        this.fromInclusive = fromInclusive;
+    }
 
-    public short getSeats() {
+    public short getSeats()
+    {
         return seats;
     }
-    public List<Periods> getPeriods() {
-        return periods;
-    }
-
-    public long getInactiveFrom() {
-        return inactiveFrom;
-    }
-
-    public void setInactiveFrom(long inactiveFrom) {
-        this.inactiveFrom = inactiveFrom;
+    public void setSeats(short seats)
+    {
+        this.seats = seats;
     }
 
 
@@ -78,5 +57,21 @@ public class Flight
 
     public void setPeriodChanged(boolean areSeatsChanged) {
         this.areSeatsChanged = areSeatsChanged;
+    }
+
+    public long getAllPassengers() {
+        return allPassengers;
+    }
+
+    public void setAllPassengers(long allPassengers) {
+        this.allPassengers = allPassengers;
+    }
+
+    public Period getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
     }
 }
