@@ -25,25 +25,16 @@ public class Plane
         flights.getLast().addNewPeriod(day, 100000000000L, seats);
     }
 
-    public short getSeatsByDay(long day, long maxDay)
+    public long getSeatsByDay(long maxDay)
     {
-        for (Flight f : flights)
+        Flight last = flights.getLast();
+        for(Periods p: last.getPeriods())
         {
-            //C
-            if(maxDay > f.getInactiveFrom())
-            {
-                continue;
-            }
-            //P
-            if  (f.isPeriodChanged() && f.getFromInclusive() <= day && day < f.getToExclusive())
-            {
-                    return f.getPeriodSeats(day);
-            }
-            //A or no changes
-            if (f.getFromInclusive() <= day && day < f.getToExclusive() && maxDay <= f.getToExclusive())
-            {
-                return f.getSeats();
-            }
+            long from = p.getGetFromInclusive();
+            long to = Math.min(maxDay, p.getToExclusive());
+
+
+            5-10, 10-15, 15-inf
 
         }
       return 0;

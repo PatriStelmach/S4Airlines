@@ -20,7 +20,7 @@ public class App
             validateInputSizes(n, q);
 
             Plane[] flights = readPlanes(fr, n);
-            List<Integer> answer = processCommands(fr, flights, q);
+            List<Long> answer = processCommands(fr, flights, q);
 
             printAnswers(answer, bw);
         }
@@ -63,9 +63,9 @@ public class App
         return flights;
     }
 
-    private static List<Integer> processCommands(FastReader fr, Plane[] flights, int q)
+    private static List<Long> processCommands(FastReader fr, Plane[] flights, int q)
     {
-        List<Integer> answer = new ArrayList<>();
+        List<Long> answer = new ArrayList<>();
 
         for (int k = 0; k < q; k++)
         {
@@ -107,29 +107,28 @@ public class App
     }
 
 
-    private static void handleQuery(FastReader fr, Plane[] flights, List<Integer> answer)
+    private static void handleQuery(FastReader fr, Plane[] flights, List<Long> answer)
     {
         int i = fr.nextInt();
         int j = fr.nextInt();
         long t = fr.nextLong();
-        int sum = 0;
+        long sum = 0;
 
         //10^18 XDDDDDDDDDD
-        for (int l = 0; l < t; l++)
-        {
+
             for (int m = i; m <= j; m++)
             {
-                sum += flights[m].getSeatsByDay(l, t);
+                sum += flights[m].getSeatsByDay(t);
             }
-        }
+
         answer.add(sum);
     }
 
-    private static void printAnswers(List<Integer> answer, BufferedWriter bw) throws IOException
+    private static void printAnswers(List<Long> answer, BufferedWriter bw) throws IOException
     {
-        for (Integer integer : answer)
+        for (Long Long : answer)
         {
-            bw.write(integer.toString());
+            bw.write(Long.toString());
             bw.newLine();
         }
         bw.flush();
