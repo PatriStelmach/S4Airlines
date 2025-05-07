@@ -14,6 +14,7 @@ public class SystemTests
     private final InputStream originalIn = System.in;
     private final PrintStream originalOut = System.out;
     private ByteArrayOutputStream outContent;
+    private App app;
 
     @BeforeEach
     void setUp()
@@ -27,6 +28,8 @@ public class SystemTests
     {
         System.setIn(originalIn);
         System.setOut(originalOut);
+        App.resetDays();
+
     }
 
     @Test
@@ -53,11 +56,11 @@ public class SystemTests
 
         // Then
         String[] outputLines = outContent.toString().split(System.lineSeparator());
-        assertEquals(4, outputLines.length);
-        assertEquals("24", outputLines[0]);
-        assertEquals("10", outputLines[1]);
-        assertEquals("22", outputLines[2]);
-        assertEquals("100", outputLines[3]);
+        assertEquals(5, outputLines.length);
+        assertEquals("24", outputLines[1]);
+        assertEquals("10", outputLines[2]);
+        assertEquals("22", outputLines[3]);
+        assertEquals("100", outputLines[4]);
 
     }
 
@@ -85,12 +88,12 @@ public class SystemTests
 
         // Then
         String[] outputLines = outContent.toString().split(System.lineSeparator());
-        assertEquals(5, outputLines.length);
-        assertEquals("2", outputLines[0]);
-        assertEquals("6", outputLines[1]);
-        assertEquals("12", outputLines[2]);
-        assertEquals("30", outputLines[3]);
-        assertEquals("36", outputLines[4]);
+        assertEquals(6, outputLines.length);
+        assertEquals("2", outputLines[1]);
+        assertEquals("6", outputLines[2]);
+        assertEquals("12", outputLines[3]);
+        assertEquals("30", outputLines[4]);
+        assertEquals("36", outputLines[5]);
     }
 
     @Test

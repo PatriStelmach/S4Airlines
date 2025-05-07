@@ -11,6 +11,7 @@ import java.util.List;
 public class App
 {
     private static long days = 1;
+
     public static void appCall()
     {
         instruction();
@@ -180,4 +181,10 @@ public class App
       Q 1 3 5
     """);
     }
+    //needed only for System tests
+    public static void resetDays()
+    {
+        days = 1;
+    }
+
 }
