@@ -14,7 +14,7 @@ All logic is implemented with vanilla Java—no frameworks—and high‐performa
 - **Range queries**  
   - **Q** _i_ _j_ _t_ – sum of available seats from planes _i_ to _j_ to day _t_  
 - **Efficient I/O** via `FastReader` (buffered parsing from `System.in`)  
-- dependencie*: only JDK 21 and JUnit 5 and mockito for testing 
+- dependencies: only JUnit 5 and mockito for testing 
 ## Repository Structure
 
 S4Airlines/
