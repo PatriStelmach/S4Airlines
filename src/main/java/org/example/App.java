@@ -94,10 +94,7 @@ public class App
         int i = fr.nextInt();
         short p = fr.nextShort();
         long t = fr.nextLong();
-        if(t < days)
-        {
-            throw new IllegalArgumentException("Queries must be in chronological order!");
-        } days = t;
+        checkT(t);
         flights[i].changePassengers(t, p);
     }
     //C
@@ -105,10 +102,7 @@ public class App
     {
         int i = fr.nextInt();
         long t = fr.nextLong();
-        if(t < days)
-        {
-            throw new IllegalArgumentException("Queries must be in chronological order!");
-        } days = t;
+        checkT(t);
         flights[i].setInactive(t);
     }
     //A
@@ -117,10 +111,7 @@ public class App
         int i = fr.nextInt();
         short p = fr.nextShort();
         long t = fr.nextLong();
-        if(t < days)
-        {
-            throw new IllegalArgumentException("Queries must be in chronological order!");
-        } days = t;
+        checkT(t);
         flights[i].newRoute(t, p);
     }
 
@@ -130,10 +121,8 @@ public class App
         int i = fr.nextInt();
         int j = fr.nextInt();
         long t = fr.nextLong();
-        if(t < days)
-        {
-            throw new IllegalArgumentException("Queries must be in chronological order!");
-        } days = t;
+        checkT(t);
+
         long sum = 0;
 
             for (int m = i; m <= j; m++)
@@ -185,6 +174,13 @@ public class App
     public static void resetDays()
     {
         days = 1;
+    }
+    public static void checkT(long t)
+    {
+        if(t < days)
+        {
+            throw new IllegalArgumentException("Queries must be in chronological order!");
+        } days = t;
     }
 
 }
