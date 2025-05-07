@@ -21,6 +21,7 @@ public class SystemTests
     {
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
+        App.resetDays();
     }
 
     @AfterEach
@@ -28,7 +29,7 @@ public class SystemTests
     {
         System.setIn(originalIn);
         System.setOut(originalOut);
-        App.resetDays();
+
 
     }
 
