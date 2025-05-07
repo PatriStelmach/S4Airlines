@@ -57,9 +57,9 @@ S4Airlines/
    cd S4Airlines
 
 2. Build
-   mvn clean install -> builds a runnable JAR file
-3. Running the app
-   java -jar S4Airlines-1.0-SNAPSHOT.jar in the jar directory
+  - mvn clean install -> builds a runnable JAR file
+3. Running the app:
+  - java -jar S4Airlines-1.0-SNAPSHOT.jar in the jar directory
 
    
 License
